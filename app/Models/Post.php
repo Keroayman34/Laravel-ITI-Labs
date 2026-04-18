@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model
 {
-    use HasFactory, SoftDeletes; // use traits   
+    use HasFactory, SoftDeletes, Sluggable; // use traits   
 
-    protected $fillable = ['title', 'desc', 'image', 'user_id'];
+    protected $fillable = ['title', 'desc', 'image', 'user_id', 'slug'];
 
     // Polymorphic relation: post has many comments
     public function comments()
@@ -23,6 +24,15 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'title',
+            ],
+        ];
     }
 
     public function getImageUrlAttribute(): string

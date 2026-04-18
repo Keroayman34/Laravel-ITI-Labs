@@ -46,6 +46,10 @@
                     </p>
 
                     <p class="text-gray-500 text-xs mb-1">
+                        Slug: {{ $post->slug ?? '—' }}
+                    </p>
+
+                    <p class="text-gray-500 text-xs mb-1">
                         By {{ $post->user->name ?? 'Unknown' }}
                     </p>
 
