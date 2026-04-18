@@ -14,10 +14,22 @@
         <div class="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
             <h1 class="text-4xl font-black text-gray-900 tracking-tight">Edit Post</h1>
         </div>
+        @if ($errors->any())
+            <div class="mx-auto mb-6 max-w-xl p-4 bg-red-100 text-red-700 rounded">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>- {{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form method="POST" action="{{ url('/posts/' . $post['id']) }}"
             class="max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-xl" enctype="multipart/form-data">
             @csrf
             @method('PUT')
+            <div class="mb-6 text-sm text-gray-600">
+                Author: <span class="font-semibold">{{ $post->user->name ?? 'Unknown' }}</span>
+            </div>
             <div class="mb-6">
                 <label class="block mb-2 text-sm font-bold text-gray-700">Title</label>
                 <input type="text" name="title" value="{{ old('title', $post['title']) }}"
@@ -25,9 +37,10 @@
                     required>
             </div>
             <div class="mb-6">
-                <label class="block mb-2 text-sm font-bold text-gray-700">Image URL</label>
-                <input type="text" name="image" value="{{ old('image', $post['image']) }}"
+                <label class="block mb-2 text-sm font-bold text-gray-700">Image</label>
+                <input type="file" name="image" accept="image/png,image/jpeg"
                     class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-600">
+                <img src="{{ $post->image_url }}" alt="Current image" class="mt-4 h-40 w-full rounded-xl object-cover">
             </div>
             <div class="mb-6">
                 <label class="block mb-2 text-sm font-bold text-gray-700">Description</label>

@@ -22,8 +22,8 @@ class StorePostRequest extends FormRequest
             // Description is required and at least 10 chars
             'desc' => 'required|min:10',
 
-            // Image is optional and must be a valid URL
-            'image' => 'nullable|url',
+            // Image is required and must be a valid image file
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 }

@@ -29,19 +29,13 @@
                 </div>
             @endif
 
-            <form action="{{ route('posts.store') }}" method="POST" class="p-8 space-y-6">
+            <form action="{{ route('posts.store') }}" method="POST" class="p-8 space-y-6" enctype="multipart/form-data">
                 @csrf
 
-                <!-- User dropdown -->
-                <select name="user_id" class="w-full border p-3 rounded">
-                    <option value="">Select User</option>
-
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                            {{ $user->name }}
-                        </option>
-                    @endforeach
-                </select>
+                <!-- Author -->
+                <div class="text-sm text-gray-600">
+                    Author: <span class="font-semibold">{{ auth()->user()->name ?? 'Unknown' }}</span>
+                </div>
 
                 <!-- Title input -->
                 <input 
@@ -55,9 +49,8 @@
                 <!-- Image input -->
                 <input 
                     name="image"
-                    type="text"
-                    value="{{ old('image') }}"
-                    placeholder="Image URL"
+                    type="file"
+                    accept="image/png,image/jpeg"
                     class="w-full border p-3 rounded"
                 />
 
@@ -70,7 +63,7 @@
                 >{{ old('desc') }}</textarea>
 
                 <!-- Submit button -->
-                <button class="w-full bg-blue-600 text-white py-3 rounded">
+                <button class="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700 transition">
                     Publish
                 </button>
 

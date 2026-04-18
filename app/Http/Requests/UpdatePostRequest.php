@@ -22,8 +22,8 @@ class UpdatePostRequest extends FormRequest
             // Description required, min 10 chars
             'desc' => 'required|min:10',
 
-            // Image optional
-            'image' => 'nullable|url',
+            // Image optional and must be a valid image file
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ];
     }
 }

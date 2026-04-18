@@ -12,7 +12,7 @@ class PostSeeder extends Seeder
     {
         $users = User::all();
 
-        Post::factory(100)->make()->each(function ($post) use ($users) {
+        Post::factory(5)->make()->each(function ($post) use ($users) {
             $post->user_id = $users->random()->id;
             $post->save();
         });
